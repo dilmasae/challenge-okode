@@ -7,3 +7,8 @@ export interface Movie {
     poster_path: string,
     release_date: string,
 }
+
+export interface MovieOption {
+    page: number,
+    q?: string,
+}
