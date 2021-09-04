@@ -1,9 +1,29 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>movie-detail</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/movies"></ion-back-button>
+    </ion-buttons>
+    <ion-title> {{ movie?.title }} </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
+  <ion-spinner *ngIf="!movie; else elseBlock" name="circles"></ion-spinner>
+
+  <ng-template #elseBlock>
+      <ion-card>
+        
+        <ion-card-header>
+          <ion-card-subtitle> {{ movie.release_date }} </ion-card-subtitle>
+          <ion-card-subtitle> {{ movie.original_language }}  </ion-card-subtitle>
+          <ion-card-title>{{ movie.title }}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          {{ movie.overview }}
+        </ion-card-content>
+    
+      </ion-card>
+  </ng-template>
+  
 </ion-content>

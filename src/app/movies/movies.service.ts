@@ -13,6 +13,7 @@ export class MoviesService {
   getMovies(page: number = 1) {
     return this.httpClient.get(`${environment.baseUrl}/3/movie/popular?api_key=${environment.apiKey}&language=es-ES&page=${page}`);
   }
-  getMovie(movieId){
+  getMovie(movieId: number | string){
+    return this.httpClient.get(`${environment.baseUrl}/3/movie/${movieId}?api_key=${environment.apiKey}&language=en-US`);
   }
 }

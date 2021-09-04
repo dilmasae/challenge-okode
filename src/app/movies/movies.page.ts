@@ -18,7 +18,6 @@ export class MoviesPage implements OnInit {
     this.moviesService.getMovies().subscribe(( paginate: Paginate<Movie[]>) => {
       const movies: Movie[] = paginate.results;
       this.movies = movies;
-      console.log(movies);
     });
   }
 
