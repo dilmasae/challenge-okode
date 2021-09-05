@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { IonInfiniteScroll } from '@ionic/angular';
 import { Paginate } from '../paginate/paginate.model';
 import { Movie, MovieOption } from './movie.model';
 import { MoviesService } from './movies.service';
@@ -10,10 +11,14 @@ import { MoviesService } from './movies.service';
 })
 export class MoviesPage implements OnInit {
 
+  page: number = 1;
+  total_pages: number = 1;
+
   q: string = "";
   isFetching: boolean = false;
-  isFetchingNextPage: boolean = false;
   movies: Movie[];
+
+  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
   constructor( private moviesService: MoviesService) { }
 
@@ -24,6 +29,11 @@ export class MoviesPage implements OnInit {
 
   private fetchData(options: MovieOption) {
     this.moviesService.getMovies({ page: options.page, q: options.q }).subscribe(( paginate: Paginate<Movie[]>) => {
+      
+      const { page, total_pages } = paginate;
+      this.page = page;
+      this.total_pages = total_pages;
+
       const movies: Movie[] = paginate.results;
 
       // Not found search parameter in API documentation
@@ -35,12 +45,42 @@ export class MoviesPage implements OnInit {
       else this.movies = movies;
       
       this.isFetching = false;
-      this.isFetchingNextPage = false;
     });
   }
 
   handleSearch() {
     this.fetchData({ page: 1, q: this.q });
+  }
+
+  loadData(event) {
+
+    this.moviesService.getMovies({ page: this.page + 1, q: this.q }).subscribe(( paginate: Paginate<Movie[]>) => {
+      
+      const { page, total_pages } = paginate;
+      this.page = page;
+      this.total_pages = total_pages;
+
+      const movies: Movie[] = paginate.results;
+
+      this.movies = [
+        ...this.movies,
+        ...movies,
+      ];
+
+      event.target.complete();
+
+      // App logic to determine if all data is loaded
+      // and disable the infinite scroll
+      if(this.page >= this.total_pages) {
+        event.target.disabled = true;
+      }
+
+    });
+
+  }
+
+  toggleInfiniteScroll() {
+    this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
   }
 
 }

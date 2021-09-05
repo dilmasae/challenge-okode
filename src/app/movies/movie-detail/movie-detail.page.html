@@ -13,17 +13,15 @@
 
   <ng-template #elseBlock>
       <ion-card>
-        
         <ion-card-header>
-          <ion-card-subtitle> {{ movie.release_date }} </ion-card-subtitle>
-          <ion-card-subtitle> {{ movie.original_language }}  </ion-card-subtitle>
           <ion-card-title>{{ movie.title }}</ion-card-title>
+          <ion-card-subtitle class="ion-padding-top"> Fecha de estreno: {{ movie.release_date }} </ion-card-subtitle>
+          <ion-card-subtitle> Idioma original: {{ movie.original_language }}  </ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
-          {{ movie.overview }}
+          <ion-card-subtitle class="ion-padding-bottom"> Sinópsis</ion-card-subtitle>
+          <ion-text>{{ movie.overview }}</ion-text>
         </ion-card-content>
-    
       </ion-card>
   </ng-template>
-  
 </ion-content>

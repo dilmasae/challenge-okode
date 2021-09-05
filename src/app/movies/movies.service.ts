@@ -16,6 +16,6 @@ export class MoviesService {
     return this.httpClient.get(url);
   }
   getMovie(movieId: number | string){
-    return this.httpClient.get(`${environment.baseUrl}/3/movie/${movieId}?api_key=${environment.apiKey}&language=en-US`);
+    return this.httpClient.get(`${environment.baseUrl}/3/movie/${movieId}?api_key=${environment.apiKey}&language=es-ES`);
   }
 }

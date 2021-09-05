@@ -21,7 +21,6 @@ export class MovieDetailPage implements OnInit {
        
       this.movieService.getMovie(recipedId).subscribe((movie: Movie) => {
         this.movie = movie;
-        console.log(movie.title)
       });
     });
   }
